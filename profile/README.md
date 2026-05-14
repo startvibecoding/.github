@@ -1,8 +1,12 @@
-# VibeCoding
+<p align="center">
+  <img src="docs/assets/logo.svg" alt="VibeCoding" width="128" height="128">
+</p>
 
-A terminal-based AI coding assistant written in Go, inspired by [pi.dev](https://pi.dev).
-A project named Vibecoding created to help HR understand that tools like Claude Code, OpenCode, pi.dev, and Cline all belong to the Vibecoding workflow paradigm.
+<h1 align="center">VibeCoding</h1>
 
+<p align="center">
+  A terminal-based AI coding assistant written in ~10,000 lines of Go, inspired by <a href="https://pi.dev">pi.dev</a>
+</p>
 
 ## Features
 
@@ -11,7 +15,7 @@ A project named Vibecoding created to help HR understand that tools like Claude 
 - **Think Mode**: Extended thinking/reasoning support (Anthropic extended thinking, OpenAI reasoning effort)
 - **Three Modes**:
   - 🗒️ **Plan** — Read-only analysis and planning. Sandboxed, no file writes
-  - 🔧 **Agent** (default) — Controlled read/write access to the project. Sandboxed, no network
+  - 🔧 **Agent** (default) — Controlled read/write access to the project. Bash requires approval (configurable whitelist). Sandboxed, no network
   - 🚀 **YOLO** — Full system access with no restrictions
 - **bwrap Sandbox**: Linux sandboxing via [bubblewrap](https://github.com/containers/bubblewrap) for secure execution
 - **Session Management**: JSONL-based session files with tree structure, branching, compaction
@@ -22,14 +26,46 @@ A project named Vibecoding created to help HR understand that tools like Claude 
 
 ### Install
 
+**Option 1: npm (Recommended)**
+
 ```bash
-go install github.com/fuckvibecoding/vibecoding/cmd/vibecoding@latest
+npm install -g vibecoding-installer
 ```
 
-Or build from source:
+**Option 2: One-line Install**
+
+Linux/macOS:
 
 ```bash
-git clone https://github.com/fuckvibecoding/vibecoding.git
+curl -fsSL https://raw.githubusercontent.com/startvibecoding/vibecoding/main/install.sh | bash
+```
+
+Windows (PowerShell):
+
+```powershell
+irm https://raw.githubusercontent.com/startvibecoding/vibecoding/main/install.ps1 | iex
+```
+
+Or with custom install directory:
+
+```bash
+# Linux/macOS
+INSTALL_DIR=~/.local/bin curl -fsSL https://raw.githubusercontent.com/startvibecoding/vibecoding/main/install.sh | bash
+
+# Windows
+$env:VIBECODING_INSTALL_DIR="C:\Tools\vibecoding"; irm https://raw.githubusercontent.com/startvibecoding/vibecoding/main/install.ps1 | iex
+```
+
+**Option 3: Go Install**
+
+```bash
+go install github.com/startvibecoding/vibecoding/cmd/vibecoding@latest
+```
+
+**Option 4: Build from Source**
+
+```bash
+git clone https://github.com/startvibecoding/vibecoding.git
 cd vibecoding
 make build
 ```
@@ -124,6 +160,10 @@ vibecoding --no-sandbox
     "enabled": true,
     "maxRetries": 3,
     "baseDelayMs": 2000
+  },
+  "approval": {
+    "bashWhitelist": ["go ", "make ", "git ", "npm ", "yarn "],
+    "bashBlacklist": ["rm -rf", "sudo"]
   }
 }
 ```
