@@ -1,287 +1,313 @@
 <p align="center">
-  <img src="https://github.com/startvibecoding/vibecoding/raw/main/docs/assets/logo.svg" alt="VibeCoding" width="128" height="128">
+  <img src="assets/mothx.png" alt="MothX" width="128" height="128">
 </p>
 
-<h1 align="center">VibeCoding</h1>
+<h1 align="center">MothX</h1>
 
 <p align="center">
-  A terminal-based AI coding assistant written in ~10,000 lines of Go, inspired by <a href="https://pi.dev">pi.dev</a>
+  <strong>🚀 One Binary to Rule Them All — Your AI Coding Assistant in the Terminal</strong>
 </p>
 
-## Features
+<p align="center">
+  Stop switching between Claude Code, Codex, Claw, and Hermes.<br>
+  MothX packs everything into a single file — providers, tools, sandbox, sessions, skills, and more.
+</p>
 
-- **Multi-Provider Support**: OpenAI (GPT-4o, o1, o3-mini), Anthropic (Claude 4 Sonnet, 3.5 Sonnet, Haiku, Opus), and custom providers
-- **SSE Streaming**: Real-time token streaming for fast response delivery
-- **Think Mode**: Extended thinking/reasoning support (Anthropic extended thinking, OpenAI reasoning effort)
-- **Three Modes**:
-  - 🗒️ **Plan** — Read-only analysis and planning. Sandboxed, no file writes
-  - 🔧 **Agent** (default) — Controlled read/write access to the project. Bash requires approval (configurable whitelist). Sandboxed, no network
-  - 🚀 **YOLO** — Full system access with no restrictions
-- **bwrap Sandbox**: Linux sandboxing via [bubblewrap](https://github.com/containers/bubblewrap) for secure execution
-- **Session Management**: JSONL-based session files with tree structure, branching, compaction
-- **Context Management**: Automatic context window management and token estimation
-- **Rich TUI**: Terminal UI built with BubbleTea, with Markdown rendering and code highlighting
+<p align="center">
+  <a href="https://www.npmjs.com/package/mothx-installer"><img src="https://img.shields.io/npm/dm/mothx-installer.svg" alt="npm downloads"></a>
+  <a href="https://pypi.org/project/mothx-installer/"><img src="https://img.shields.io/pypi/v/mothx-installer.svg" alt="PyPI version"></a>
+  <a href="https://github.com/startvibecoding/mothx/releases/latest"><img src="https://img.shields.io/github/release/startvibecoding/mothx.svg" alt="GitHub release"></a>
+  <a href="https://gitee.com/startvibecoding/mothx/releases/latest"><img src="https://img.shields.io/badge/Gitee-release-blue" alt="Gitee release"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://goreportcard.com/report/github.com/startvibecoding/mothx"><img src="https://goreportcard.com/badge/github.com/startvibecoding/mothx" alt="Go Report Card"></a>
+  <a href="https://pkg.go.dev/github.com/startvibecoding/mothx"><img src="https://pkg.go.dev/badge/github.com/startvibecoding/mothx?status.svg" alt="GoDoc"></a>
+  <a href="https://github.com/startvibecoding/mothx/network/dependencies"><img src="https://img.shields.io/librariesio/release/github/startvibecoding/mothx" alt="Dependencies"></a>
+</p>
 
-## Quick Start
+<p align="center">
+  <strong>国内镜像: <a href="https://gitee.com/startvibecoding/mothx">Gitee</a></strong>
+</p>
 
-### Install
+> **Rename notice:** MothX was formerly known as VibeCoding. During this transition release, legacy entry points such as the `vibecoding` command, the old installer package names, and `VIBECODING_*` environment variables are kept for compatibility. Legacy `.vibecoding` and `.vibe` directories are automatically migrated to `.mothx` when found.
 
-**Option 1: npm (Recommended)**
+---
 
-```bash
-npm install -g vibecoding-installer
-```
+## ✨ Why MothX?
 
-**Option 2: One-line Install**
+**The Problem:** You're juggling multiple AI coding tools — Claude Code for one thing, Codex for another, Claw for something else. Each has its own setup, its own quirks, its own dependencies.
 
-Linux/macOS:
+**The Solution:** MothX is the **all-in-one terminal AI coding assistant** that does it all. One binary. One config. Zero hassle.
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/startvibecoding/vibecoding/main/install.sh | bash
-```
+### 🎯 Key Highlights
 
-Windows (PowerShell):
+| Feature | What It Means for You |
+|---------|----------------------|
+| **⚙️ Workflow Mode** | Dynamic Elisp workflows with phases, parallel execution, and multi-worker coordination — automate complex development pipelines |
+| **🤖 Multi-Provider** | DeepSeek, OpenAI, Anthropic, Volcengine/Doubao, LongCat, Mistral, GitHub Copilot, Cloudflare, Amazon Bedrock, and 20+ vendor adapters — switch models instantly |
+| **⚡ Lightning Fast** | SSE streaming, real-time token delivery, cache hit optimization |
+| **🧠 Think Mode** | Extended reasoning for complex problems (DeepSeek, o1, Claude, inline `<think>` parsing) |
+| **🛡️ Sandboxed** | bwrap process isolation — safe file ops, network control, approval gates |
+| **📝 Sessions** | Persistent SQLite-backed history with branching, compaction, and tree structure |
+| **🧩 Skills** | Reusable prompt snippets for project conventions — share across teams |
+| **💻 IDE Ready** | ACP protocol for VS Code, Zed, JetBrains — native editor integration |
+| **🌐 Gateway** | OpenAI-compatible HTTP API — use MothX as a backend service |
+| **📱 Messaging** | WeChat, Feishu, WebSocket — deploy as a chatbot |
+| **🤝 Multi-Agent** | Async sub-agents with `--multi-agent`, blocking delegation with `--delegate`, and A2A master mode |
+| **🎨 Rich TUI** | Markdown rendering, syntax highlighting, thinking display, tool modals, multiline input |
+| **📊 Stats Dashboard** | Web-based usage analytics with charts, filtering by time/vendor/protocol, and CLI fallback |
+| **🖼️ Multimodal** | Image preprocessing, crop support, browser screenshots, and vision model integration |
+| **🔒 Security** | bashBlacklist > whitelist, YOLO mode safety, `--print` fails fast |
+| **📦 Pure Go** | No external binary dependencies — uses pure-Go `grep`/`find` SDKs, supports FreeBSD |
+| **⚡ Approval V2** | Interactive approval dialog, project-level bash auto-approval rules, and auto-edit whitelists |
 
-```powershell
-irm https://raw.githubusercontent.com/startvibecoding/vibecoding/main/install.ps1 | iex
-```
+---
 
-Or with custom install directory:
-
-```bash
-# Linux/macOS
-INSTALL_DIR=~/.local/bin curl -fsSL https://raw.githubusercontent.com/startvibecoding/vibecoding/main/install.sh | bash
-
-# Windows
-$env:VIBECODING_INSTALL_DIR="C:\Tools\vibecoding"; irm https://raw.githubusercontent.com/startvibecoding/vibecoding/main/install.ps1 | iex
-```
-
-**Option 3: Go Install**
-
-```bash
-go install github.com/startvibecoding/vibecoding/cmd/vibecoding@latest
-```
-
-**Option 4: Build from Source**
-
-```bash
-git clone https://github.com/startvibecoding/vibecoding.git
-cd vibecoding
-make build
-```
-
-### Cross-compile
+## 🚀 Get Started in 30 Seconds
 
 ```bash
-make build-all    # Build for linux/amd64, darwin/amd64, darwin/arm64, windows/amd64
+# Install (pick one)
+npm install -g mothx-installer               # npm (recommended)
+pipx install mothx-installer                # PyPI
+curl -fsSL https://raw.githubusercontent.com/startvibecoding/mothx/main/install.sh | bash  # Linux/macOS/FreeBSD (GitHub)
+curl -fsSL https://gitee.com/startvibecoding/mothx/raw/main/install.sh | bash  # Linux/macOS/FreeBSD (Gitee 国内镜像)
+
+# Set your API key
+export DEEPSEEK_API_KEY=sk-...
+
+# Run
+mothx
 ```
 
-### Configure
+That's it. You're coding with AI.
 
-Set your API key:
+**Supported Platforms:** Linux (x86_64, arm64), macOS (x86_64, arm64), Windows (x86_64), FreeBSD (x86_64, arm64)
+
+**Uninstall:**
 
 ```bash
-# Anthropic
-export ANTHROPIC_API_KEY=sk-ant-...
+# npm
+npm uninstall -g mothx-installer
 
-# OpenAI
-export OPENAI_API_KEY=sk-...
+# Compatibility package, if installed before the rename
+npm uninstall -g vibecoding-installer
+
+# PyPI
+pipx uninstall mothx-installer
+
+# Linux/macOS (one-line install)
+curl -fsSL https://gitee.com/startvibecoding/mothx/raw/main/install.sh | bash -s -- --uninstall
+
+# Windows (one-line install)
+irm https://gitee.com/startvibecoding/mothx/raw/main/install.ps1 | iex; Uninstall-MothX
 ```
 
-Or use the auth file (`~/.vibecoding/auth.json`):
+---
 
-```json
-{
-  "anthropic": { "type": "api_key", "key": "sk-ant-..." },
-  "openai": { "type": "api_key", "key": "sk-..." }
-}
+## 🎮 Three Modes for Every Situation
+
+```
+🗒️  Plan    → Read-only analysis & planning. Safe, sandboxed, no surprises.
+🔧  Agent   → Standard read/write. Bash approval required. (Default)
+🚀  YOLO    → Full system access. No restrictions. For the brave.
 ```
 
-### Run
+Switch modes anytime with `/mode plan|agent|yolo` or press `Tab`.
 
+---
+
+## 🏗️ Architecture at a Glance
+
+```
+mothx/
+├── cmd/mothx/        # CLI entry point
+├── internal/
+│   ├── agent/             # Core agent loop
+│   ├── provider/          # LLM provider abstraction (20+ vendors)
+│   ├── tools/             # Built-in tools (read, write, bash, grep, find, ...)
+│   ├── sandbox/           # bwrap sandbox implementation
+│   ├── session/           # SQLite session storage
+│   ├── skills/            # Skills system
+│   ├── tui/               # Terminal UI (BubbleTea + Lipgloss)
+│   ├── gateway/           # OpenAI-compatible HTTP gateway
+│   ├── hermes/            # Messaging gateway (WeChat/Feishu/WebSocket)
+│   ├── a2a/               # A2A protocol server & master mode
+│   ├── acp/               # ACP / MCP integration
+│   ├── stats/             # Usage statistics web dashboard
+│   ├── workflow/          # Elisp workflow runtime
+│   └── memory/            # Persistent memory (memory.md)
+└── pkg/sdk/               # Public SDK interface
+```
+
+---
+
+## 📚 Documentation
+
+### 🚀 Getting Started
+- [Quick Start](https://github.com/startvibecoding/mothx/blob/main/docs/en/getting-started.md) — Installation, configuration, first run
+- [CLI Reference](https://github.com/startvibecoding/mothx/blob/main/docs/en/cli-reference.md) — All commands and flags
+
+### ⚙️ Configuration
+- [Configuration Guide](https://github.com/startvibecoding/mothx/blob/main/docs/en/configuration.md) — Settings, env vars, authentication
+- [Provider Guide](https://github.com/startvibecoding/mothx/blob/main/docs/en/provider-guide.md) — Provider/vendor configuration
+
+### 🏗️ Architecture
+- [System Architecture](https://github.com/startvibecoding/mothx/blob/main/docs/en/architecture.md) — Core components, data flow
+- [Tool System](https://github.com/startvibecoding/mothx/blob/main/docs/en/tools.md) — Built-in tools guide
+- [Skills System](https://github.com/startvibecoding/mothx/blob/main/docs/en/skills.md) — Reusable prompt snippets
+- [Online Skill Marketplace](https://github.com/startvibecoding/mothx/blob/main/docs/en/skillhub.md) — SkillHub / ClawHub integration
+- [Dynamic Workflows](https://github.com/startvibecoding/mothx/blob/main/docs/en/workflows.md) — Elisp workflow automation
+
+### 🔒 Security
+- [Security & Sandbox](https://github.com/startvibecoding/mothx/blob/main/docs/en/security.md) — Sandbox modes, permissions, approval
+
+### 💻 IDE Integration
+- [ACP Protocol](https://github.com/startvibecoding/mothx/blob/main/docs/en/acp.md) — VS Code, Zed, JetBrains integration
+
+### 🌐 Gateway Modes
+- [Gateway Mode](https://github.com/startvibecoding/mothx/blob/main/docs/en/gateway.md) — OpenAI-compatible HTTP API
+- [Hermes Mode](https://github.com/startvibecoding/mothx/blob/main/docs/en/hermes.md) — WeChat/Feishu/WebSocket chatbot
+- [A2A Protocol](https://github.com/startvibecoding/mothx/blob/main/docs/en/a2a.md) — Agent-to-Agent protocol
+
+### 📊 Analytics
+- [Stats Dashboard](https://github.com/startvibecoding/mothx/blob/main/docs/en/stats.md) — Usage statistics and monitoring
+
+### 📖 Tutorials
+- [Scenarios & Walkthroughs](https://github.com/startvibecoding/mothx/blob/main/docs/en/scenarios.md) — Practical examples
+- [FAQ](https://github.com/startvibecoding/mothx/blob/main/docs/en/faq.md) — Common questions answered
+
+### 🇨🇳 中文文档
+- [中文文档首页](https://github.com/startvibecoding/mothx/blob/main/docs/zh/README.md) — 完整中文文档
+
+---
+
+## 🎯 Use Cases
+
+### 💻 Daily Development
 ```bash
-# Interactive mode
-vibecoding
-
-# With initial prompt
-vibecoding "Explain this codebase"
-
-# Non-interactive (print mode)
-vibecoding -p "Write a hello world in Go"
-
-# Specify provider and model
-vibecoding --provider openai --model gpt-4o
-
-# Change mode
-vibecoding --mode plan    # Read-only planning
-vibecoding --mode agent   # Standard (default)
-vibecoding --mode yolo    # Full access
-
-# Continue most recent session
-vibecoding -c
-
-# Disable sandbox
-vibecoding --no-sandbox
+mothx -P "Refactor this function to use generics"
+mothx -P "Write tests for the UserService struct"
+mothx -P "Explain what this regex does"
 ```
 
-## Configuration
+### 🔍 Code Review
+```bash
+mothx --mode plan "Review this PR and suggest improvements"
+```
+
+### 🚀 CI/CD Integration
+```bash
+mothx -p "Generate changelog from git log" > CHANGELOG.md
+```
+
+### 🌐 API Server
+```bash
+mothx gateway  # Start OpenAI-compatible HTTP server
+```
+
+### 📱 Chatbot
+```bash
+mothx hermes   # Deploy as WeChat/Feishu bot
+```
+
+### 📊 Usage Analytics
+```bash
+mothx stats    # Start web dashboard on 127.0.0.1:7878
+mothx stats --cli  # Print stats in terminal
+```
+
+### 🔄 Dynamic Workflows
+```bash
+mothx --workflows  # Enable Elisp workflow automation
+# Use workflow_run, workflow_status, workflow_cancel tools
+```
+
+### 🖼️ Image Analysis
+```bash
+mothx -P "Describe this screenshot" --image screenshot.png
+mothx -P "Extract text from this image" --image document.jpg
+```
+
+---
+
+## 🛠️ Built-in Tools
+
+| Tool | Description |
+|------|-------------|
+| `read` | Read file contents |
+| `write` | Create/overwrite files |
+| `edit` | Precise text replacement |
+| `bash` | Execute shell commands |
+| `grep` | Search file contents (powered by pure-Go ripgrep) |
+| `find` | Find files by pattern (powered by pure-Go fd) |
+| `ls` | List directory contents |
+| `plan` | Publish task plans |
+| `jobs` | Manage background jobs |
+| `kill` | Stop background jobs |
+| `skill_ref` | Load skill references |
+| `workflow_run` | Execute Elisp workflow DSL |
+| `workflow_status` | Check workflow run status |
+| `workflow_cancel` | Cancel running workflows |
+| `delegate_subagent` | Blocking single sub-agent delegation |
+| `subagent_spawn` | Async sub-agent execution |
+| `question` | Interactive user prompts (plan/agent modes) |
+
+---
+
+## 🔧 Configuration
 
 ### Settings Files
 
-| Location | Scope |
-|----------|-------|
-| `~/.vibecoding/settings.json` | Global (all projects) |
-| `.vibe/settings.json` | Project (overrides global) |
+| Location | Platform | Scope |
+|----------|----------|-------|
+| `~/.mothx/settings.json` | Linux/macOS/FreeBSD | Global |
+| `%APPDATA%\mothx\settings.json` | Windows | Global |
+| `.mothx/settings.json` | All | Project (overrides global) |
 
-### Example Settings
-
-```json
-{
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-4-20250514",
-  "defaultThinkingLevel": "medium",
-  "defaultMode": "agent",
-  "maxContextTokens": 200000,
-  "maxOutputTokens": 16384,
-  "compaction": {
-    "enabled": true,
-    "reserveTokens": 16384,
-    "keepRecentTokens": 20000
-  },
-  "sandbox": {
-    "enabled": true,
-    "level": "standard",
-    "allowNetwork": false
-  },
-  "contextFiles": {
-    "enabled": true
-  },
-  "retry": {
-    "enabled": true,
-    "maxRetries": 3,
-    "baseDelayMs": 2000
-  },
-  "approval": {
-    "bashWhitelist": ["go ", "make ", "git ", "npm ", "yarn "],
-    "bashBlacklist": ["rm -rf", "sudo"]
-  }
-}
-```
+Existing `.vibecoding` and `.vibe` directories are automatically migrated to `.mothx` when the destination does not already exist. `VIBECODING_*` environment variables remain supported for compatibility; use `MOTHX_DIR` for new custom config directory overrides.
 
 ### Environment Variables
 
 | Variable | Description |
 |----------|-------------|
-| `ANTHROPIC_API_KEY` | Anthropic API key |
-| `OPENAI_API_KEY` | OpenAI API key |
-| `VIBECODING_DIR` | Override config directory |
+| `DEEPSEEK_API_KEY` | DeepSeek API key |
+| `MOTHX_DIR` | Override config directory |
+| `VIBECODING_DIR` | Override config directory (legacy compatibility) |
 | `VIBECODING_PROVIDER` | Override default provider |
 | `VIBECODING_MODEL` | Override default model |
 | `VIBECODING_MODE` | Override default mode |
-| `VIBECODING_THINKING` | Override default thinking level |
-| `VIBECODING_USER_AGENT` | Custom User-Agent string |
+| `VIBECODING_DEBUG` | Enable debug output |
+| `VIBECODING_NO_UPDATE_CHECK` | Disable update notifications |
+| `VIBECODING_NPM_REGISTRY` | Override npm registry URL |
 
-## Sandbox Security
+### Gateway Configuration
 
-VibeCoding uses [bubblewrap](https://github.com/containers/bubblewrap) for Linux sandboxing.
+Gateway-specific config lives in `gateway.json` (global `~/.mothx/gateway.json`, project `.mothx/gateway.json`). See [Gateway Mode](https://github.com/startvibecoding/mothx/blob/main/docs/en/gateway.md) for details.
 
-| Mode | File System | Network | bwrap |
-|------|------------|---------|-------|
-| **Plan** (strict) | Project read-only | ✗ | ✓ |
-| **Agent** (standard) | Project read-write | ✗ | ✓ |
-| **YOLO** (none) | Full access | ✓ | ✗ |
+### Hermes Configuration
 
-### Installing bwrap
+Hermes-specific config lives in `hermes.json` (global `<GLOBAL_DIR>/hermes.json`, project `.mothx/hermes.json`). See [Hermes Mode](https://github.com/startvibecoding/mothx/blob/main/docs/en/hermes.md) for details.
 
-```bash
-# Debian/Ubuntu
-sudo apt install bubblewrap
+---
 
-# Fedora
-sudo dnf install bubblewrap
+## 🤝 Contributing
 
-# Arch
-sudo pacman -S bubblewrap
-```
-
-## CLI Reference
-
-```
-vibecoding [flags] [message...]
-Aliases: vc
-
-Flags:
-  -p, --provider string    Provider (openai, anthropic, or custom provider name)
-  -m, --model string       Model ID
-  -M, --mode string        Mode (plan, agent, yolo)
-  -t, --thinking string    Thinking level (off, minimal, low, medium, high, xhigh)
-  -c, --continue           Continue most recent session
-  -r, --resume string      Resume session by ID or path
-      --session string     Use specific session file or ID
-      --sandbox            Enable sandbox (bwrap) for secure execution
-  -P, --print              Print response and exit (non-interactive)
-      --verbose            Verbose output
-      --debug              Enable debug logging
-  -v, --version            Show version
-  -h, --help               Show help
-```
-
-### Interactive Commands
-
-| Command | Description |
-|---------|-------------|
-| `/mode [plan\|agent\|yolo]` | Switch mode |
-| `/model` | Show current model |
-| `/think` | Cycle thinking level |
-| `/skills` | List loaded skills |
-| `/clear` | Clear conversation |
-| `/help` | Show help |
-| `/quit` | Exit |
-
-### Keyboard Shortcuts
-
-| Key | Action |
-|-----|--------|
-| `Ctrl+C` | Abort / Clear input |
-| `Ctrl+D` | Quit |
-| `Tab` | Cycle thinking level |
-| `Ctrl+T` | Toggle thinking display |
-
-## Development
+We welcome contributions! See [Development Guide](https://github.com/startvibecoding/mothx/blob/main/docs/en/development.md) for details.
 
 ```bash
-make build      # Build binary
-make test       # Run tests
-make lint       # Run linter
-make fmt        # Format code
-make clean      # Clean build artifacts
-make build-all  # Cross-compile for all platforms
-make dist       # Build distribution packages (.deb, .tar.gz)
+git clone https://github.com/startvibecoding/mothx.git
+cd mothx
+make build
+make test
 ```
 
-## Architecture
+---
 
-```
-vibecoding/
-├── cmd/vibecoding/        # CLI entry point
-├── internal/
-│   ├── agent/             # Core agent loop
-│   ├── config/            # Configuration system
-│   ├── context/           # Context management and token estimation
-│   ├── contextfiles/      # Context file discovery (AGENTS.md, CLAUDE.md, etc.)
-│   ├── platform/          # Cross-platform compatibility utilities
-│   ├── provider/          # LLM provider abstraction
-│   │   ├── openai/        # OpenAI Chat Completions API
-│   │   └── anthropic/     # Anthropic Messages API
-│   ├── sandbox/           # Sandbox (bwrap) implementation
-│   ├── session/           # Session management (JSONL)
-│   ├── skills/            # Skills system
-│   ├── tools/             # Tool implementations
-│   ├── tui/               # Terminal UI (BubbleTea)
-│   └── ua/                # User-Agent string generation
-└── pkg/sdk/               # Public SDK interface
-```
+## 📄 License
 
-## License
+MIT — see [LICENSE](https://github.com/startvibecoding/mothx/blob/main/LICENSE) for details.
 
-MIT
+---
+
+<p align="center">
+  <strong>Ready to vibe? ⭐ Star this repo and start coding!</strong>
+</p>
